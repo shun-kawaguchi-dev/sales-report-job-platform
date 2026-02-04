@@ -1,4 +1,4 @@
-1. 概要  
+# 概要  
   - 中小企業向けの売上データを、高負荷でも安定して非同期レポート化する Go 製バックエンド＋React 管理画面
   - 自社開発・中小システム会社が、自社 / お客様向けに導入する社内レポート基盤を想定
   - 技術スタック
@@ -8,7 +8,7 @@
     - インフラ：Docker compose
     - 非機能：テスト／ログ／CI
 ​
-2. リポジトリ構成（ディレクトリ概要）  
+# リポジトリ構成（ディレクトリ概要）  
 backend/
 cmd/api/ … REST API サーバ（認証・レポートジョブ受付・進捗／結果取得）
 cmd/worker/ … ジョブ Worker（売上レポート生成処理）
@@ -34,7 +34,7 @@ sequence-report-generation.md … ジョブのシーケンス図
 api-spec.md … API 一覧
 metrics.md … 監視項目一覧
 
-3. 機能概要（README 用の箇条書き）
+# 機能概要（README 用の箇条書き）
 ユーザ向け機能（管理画面＋API）
 レポートテンプレート登録
 「顧客別売上」「月次売上推移」「商品カテゴリ別売上」などのテンプレート定義。
@@ -52,7 +52,7 @@ metrics.md … 監視項目一覧
 メトリクス確認（Prometheus エクスポート：ジョブ処理時間・失敗率など）
 ヘルスチェックエンドポイント（API・Worker の稼働確認）
 ​
-4. 主要テーブル設計（概要）
+# 主要テーブル設計（概要）
 - customers
   - id, name, email, created_at, …
 - products
@@ -68,7 +68,7 @@ metrics.md … 監視項目一覧
 - notifications（任意）
   - id, report_job_id, channel(email/webhook)、status, last_error, …
 
-5. ジョブ状態遷移（概要）
+# ジョブ状態遷移（概要）
 README の図 or 箇条書き用イメージ。
 QUEUED
 API が report_jobs に挿入し、ジョブキューに enque。
@@ -84,7 +84,7 @@ progress は、
 0–100（％）
 「期間分割」の完了チャンク数などから算出。
 
-6. 主な API エンドポイント（概要）
+# 主な API エンドポイント（概要）
 POST /api/reports
 レポート生成ジョブを作成。ボディで期間・種別・フォーマットを指定。
 GET /api/reports
@@ -102,7 +102,7 @@ Prometheus 形式でメトリクス公開。
 GET /api/health
 API・DB・ジョブキューの簡易ヘルスチェック。
 
-7. フロントエンド（React 管理画面）の概要
+# フロントエンド（React 管理画面）の概要
 技術
 React＋TypeScript＋任意のUIライブラリ（Material UI や Chakra など）
 
@@ -114,14 +114,14 @@ React＋TypeScript＋任意のUIライブラリ（Material UI や Chakra など�
 レポート詳細画面
 状態、進捗、ログの抜粋、ダウンロードボタン。
 
-8. README に書く「完成ライン」と拡張
-v1 完成ライン
+# release
+v1
 API＋Worker＋Postgres＋Redis／River構成
 売上レポート（顧客別／月次）
 ジョブ状態管理＋基本のリトライ
 簡易 React 管理画面（一覧＋新規作成＋詳細＋ダウンロード）
 
-v2 以降の拡張
+v2
 メトリクス／トレースの拡充
 通知チャンネル追加
 
